@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@layer components {
+  .home {
+    @apply flex flex-col items-center justify-center h-screen;
+  }
+}
