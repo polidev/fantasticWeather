@@ -12,6 +12,8 @@ export function useFetchWeatherData(city_name) {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (!city_name) return;
+
         setLoading(true);
         setError(null);
 
