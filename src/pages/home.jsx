@@ -16,6 +16,7 @@ export default function Home() {
       {loading && <p>Loading weather data...</p>}
       {error && <p>{error}</p>}
 
+      {/* {weatherData && <WeatherCard weatherData={weatherData} />} */}
       <WeatherCard
         weatherData={{
           city: "New York",
