@@ -1,13 +1,12 @@
-import { useFetchWeatherData } from "../../api/weather.js";
 import "./searchBar.css";
 
-export default function SearchBar() {
+export default function SearchBar({ setCurrentCity }) {
   const handleSearch = (event) => {
     event.preventDefault();
     const searchInput = document.getElementById("search-input");
     const city = searchInput.value.trim().toLowerCase();
     console.log(city);
-    // useFetchWeatherData(city);
+    setCurrentCity(city);
     searchInput.value = "";
   };
 
@@ -23,7 +22,6 @@ export default function SearchBar() {
         id="search-input"
         type="text"
         placeholder="e.g. Guadalajara"
-        className="search-bar"
         onKeyPress={handleKeyPress}
         required
       />
