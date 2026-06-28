@@ -2,20 +2,21 @@ import { useState, useEffect } from "react";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
-export function useWeather({ latitude, longitude }) {
-  const CURRENT_WEATHER_BASE_URL = `https://api.openweathermap.org/data/4.0/onecall/current?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
-
+export function useCurrentWeather({ latitude, longitude }) {
   const [currentWeather, setCurrentWeather] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [loadingCurrentWeather, setLoading] = useState(true);
+  const [errorCurrentWeather, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (!latitude || !longitude) return;
+
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`${CURRENT_WEATHER_BASE_URL}`);
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
+        const response = await fetch(url);
 
         if (!response.ok) {
           throw new Error(`HTTP error: ${response.status}`);
@@ -39,7 +40,7 @@ export function useWeather({ latitude, longitude }) {
     };
 
     fetchData();
-  }, [CURRENT_WEATHER_BASE_URL]);
+  }, [latitude, longitude]);
 
-  return { currentWeather, loading, error };
+  return { currentWeather, loadingCurrentWeather, errorCurrentWeather };
 }
