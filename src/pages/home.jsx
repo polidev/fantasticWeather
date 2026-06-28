@@ -1,35 +1,37 @@
+import { useState } from "react";
 import SearchBar from "../components/searchBar/searchBar.jsx";
 import WeatherCard from "../components/weatherCard/weatherCard.jsx";
+import { fetchWeatherByCity, fetchCurrentWeather } from "../api/weather.js";
 import "./home.css";
 
-import { useFetchWeatherData } from "../api/weather.js";
-import { useCurrentWeather } from "../hooks/useCurrentWeather.js";
-import { useState, useEffect } from "react";
-
 export default function Home() {
-  const [currentCity, setCurrentCity] = useState("");
-  const { weatherData } = useFetchWeatherData(currentCity);
+  const [currentWeather, setCurrentWeather] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const [coordinates, setCoordinates] = useState({});
-  const { currentWeather, loadingCurrentWeather, errorCurrentWeather } =
-    useCurrentWeather(coordinates);
+  const handleSearch = (city) => {
+    setLoading(true);
+    setError(null);
+    setCurrentWeather(null);
 
-  useEffect(() => {
-    if (weatherData) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setCoordinates({
-        latitude: weatherData.coord.lat,
-        longitude: weatherData.coord.lon,
-      });
-    }
-  }, [weatherData]);
+    fetchWeatherByCity(city)
+      .then((data) => {
+        if (!data) return;
+        return fetchCurrentWeather(data.coord.lat, data.coord.lon);
+      })
+      .then((data) => {
+        if (data) setCurrentWeather(data);
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  };
 
   return (
     <main className="home">
-      <SearchBar setCurrentCity={setCurrentCity} />
+      <SearchBar onSearch={handleSearch} />
 
-      {loadingCurrentWeather && <p>Loading weather data...</p>}
-      {errorCurrentWeather && <p>{errorCurrentWeather}</p>}
+      {loading && <p>Loading weather data...</p>}
+      {error && <p>{error}</p>}
 
       {currentWeather && <WeatherCard weatherData={currentWeather} />}
     </main>
