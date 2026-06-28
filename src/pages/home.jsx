@@ -16,14 +16,15 @@ export default function Home() {
       {loading && <p>Loading weather data...</p>}
       {error && <p>{error}</p>}
 
-      {/* {weatherData && <WeatherCard weatherData={weatherData} />} */}
-      <WeatherCard
-        weatherData={{
-          city: "New York",
-          temperature: 25,
-          description: "Sunny",
-        }}
-      />
+      {weatherData && (
+        <WeatherCard
+          weatherData={{
+            city: weatherData.name,
+            temperature: weatherData.main.temp,
+            description: weatherData.weather[0].description,
+          }}
+        />
+      )}
     </main>
   );
 }

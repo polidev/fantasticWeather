@@ -2,6 +2,6 @@
 
 @layer components {
   .home {
-    @apply flex flex-col items-center justify-center h-screen;
+    @apply flex flex-col gap-4 items-center justify-center h-screen;
   }
 }

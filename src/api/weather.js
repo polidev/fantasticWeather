@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
 export function useFetchWeatherData(city_name) {
-  const BASE_URL = `https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=${API_KEY}`;
+  const CURRENT_CITY_BASE_URL = `https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=${API_KEY}`;
 
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ export function useFetchWeatherData(city_name) {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`${BASE_URL}`);
+        const response = await fetch(`${CURRENT_CITY_BASE_URL}`);
 
         if (!response.ok) {
           throw new Error(`HTTP error: ${response.status}`);
@@ -41,7 +41,8 @@ export function useFetchWeatherData(city_name) {
     };
 
     fetchData();
-  }, [BASE_URL]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [CURRENT_CITY_BASE_URL]);
 
   return { weatherData, loading, error };
 }
