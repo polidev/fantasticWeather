@@ -1,26 +1,40 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
-@layer components {
-  #root {
-    @apply w-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700;
-    & h1,
-    & h2,
-    & h3,
-    & h4,
-    & h5,
-    & h6 {
-      @apply text-gray-900 dark:text-gray-100;
-    }
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  --text-fluid-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-fluid-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+  --text-fluid-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  --text-fluid-lg: clamp(1.125rem, 1rem + 0.625vw, 1.375rem);
+  --text-fluid-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  --text-fluid-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --text-fluid-3xl: clamp(2rem, 1.6rem + 2vw, 3rem);
+  --text-fluid-4xl: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1440px;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
-}
 
-body {
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @apply bg-gray-900;
+  }
 
-body::-webkit-scrollbar {
-  display: none;
+  body::-webkit-scrollbar {
+    display: none;
+  }
 }
