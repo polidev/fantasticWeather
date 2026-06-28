@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [currentCity, setCurrentCity] = useState("");
-  const { weatherData, loading, error } = useFetchWeatherData(currentCity);
+  const { weatherData } = useFetchWeatherData(currentCity);
 
   const [coordinates, setCoordinates] = useState({});
   const { currentWeather, loadingCurrentWeather, errorCurrentWeather } =
@@ -28,18 +28,10 @@ export default function Home() {
     <main className="home">
       <SearchBar setCurrentCity={setCurrentCity} />
 
-      {loading && <p>Loading weather data...</p>}
-      {error && <p>{error}</p>}
+      {loadingCurrentWeather && <p>Loading weather data...</p>}
+      {errorCurrentWeather && <p>{errorCurrentWeather}</p>}
 
-      {weatherData && (
-        <WeatherCard
-          weatherData={{
-            city: weatherData.name,
-            temperature: weatherData.main.temp,
-            description: weatherData.weather[0].description,
-          }}
-        />
-      )}
+      {currentWeather && <WeatherCard weatherData={currentWeather} />}
     </main>
   );
 }

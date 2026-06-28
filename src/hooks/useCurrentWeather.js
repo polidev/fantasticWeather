@@ -4,7 +4,7 @@ const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
 export function useCurrentWeather({ latitude, longitude }) {
   const [currentWeather, setCurrentWeather] = useState(null);
-  const [loadingCurrentWeather, setLoading] = useState(true);
+  const [loadingCurrentWeather, setLoading] = useState(false);
   const [errorCurrentWeather, setError] = useState(null);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export function useCurrentWeather({ latitude, longitude }) {
         setLoading(true);
         setError(null);
 
-        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`;
         const response = await fetch(url);
 
         if (!response.ok) {
