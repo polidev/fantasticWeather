@@ -1,7 +1,0 @@
-@import "tailwindcss";
-
-@layer components {
-  .home {
-    @apply flex flex-col gap-4 items-center justify-center h-screen;
-  }
-}
